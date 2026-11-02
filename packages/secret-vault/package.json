@@ -1,0 +1,46 @@
+{
+  "name": "dsh-plugin-secret-vault",
+  "version": "0.1.0",
+  "description": "Encrypted secret vault for DeepSeek Harness: the model uses secrets by reference and never sees the values; one-time links let you enter secrets from phone/Mac.",
+  "type": "module",
+  "main": "lib/index.mjs",
+  "files": [
+    "lib",
+    "README.md",
+    "cordis.patch.yml"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "secrets",
+    "vault",
+    "password",
+    "dpapi"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test test/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@sanity-labs/secret-scan": "^1.1.0"
+  },
+  "exports": {
+    ".": "./lib/index.mjs",
+    "./reader": "./lib/reader.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yanming41/dsh-plugins.git",
+    "directory": "packages/secret-vault"
+  },
+  "author": "Yanming41"
+}

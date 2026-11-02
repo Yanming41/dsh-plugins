@@ -1,0 +1,20 @@
+# Discord 桥接：discord（网关 + 发消息服务）、threads（帖子 ↔ dsh / Claude Code / Codex）、lobby（开帖 / 接回历史会话）。
+# 需要先装 dsh-plugin-persistent-agents（Claude Code / Codex 引擎）。必填：bot token（config.token 或环境变量
+# DISCORD_TOKEN）、ownerId、要监听的 channels，以及 lobby 的 parent（新帖开在哪个频道/论坛下）。其余见 README。
+- insert:
+    - id: discord
+      name: dsh-plugin-discord-bridge/discord
+      config:
+        ownerId: ''
+        channels: []
+        lobbies: []
+        apiPort: 8796
+    - id: threads
+      name: dsh-plugin-discord-bridge/threads
+      config:
+        defaultEngine: dsh
+        apiPort: 8796
+    - id: lobby
+      name: dsh-plugin-discord-bridge/lobby
+      config:
+        parent: ''

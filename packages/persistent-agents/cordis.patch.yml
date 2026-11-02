@@ -1,0 +1,9 @@
+# 常驻 Claude Code / Codex 会话服务。配置项见 README。
+- insert:
+    - id: persistent-agents
+      name: dsh-plugin-persistent-agents
+      config:
+        port: 8797
+        idleMin: 60
+        turnMin: 30
+        exitIdleMin: 30

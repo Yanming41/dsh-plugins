@@ -1,0 +1,6 @@
+{
+  "name": "dsh-plugins",
+  "private": true,
+  "description": "DeepSeek Harness (dsh) plugins: Discord bridge, persistent Claude Code / Codex sessions, secret vault, secret guard",
+  "workspaces": ["packages/*"]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "dsh-plugin-discord-bridge",
+  "version": "0.1.0",
+  "description": "Discord bridge for DeepSeek Harness: chat with dsh / Claude Code / Codex in Discord threads, one bot per agent with @ routing, per-thread work lock and queue, live progress, reply buttons, LaTeX rendering, and opening/resuming local sessions from Discord.",
+  "type": "module",
+  "exports": {
+    "./discord": "./lib/discord.mjs",
+    "./threads": "./lib/threads.mjs",
+    "./lobby": "./lib/lobby.mjs",
+    "./package.json": "./package.json"
+  },
+  "files": ["lib", "README.md", "cordis.patch.yml"],
+  "keywords": ["dsh", "dsh-plugin", "cordis", "discord", "bridge", "claude-code", "codex"],
+  "engines": { "node": ">=22" },
+  "license": "MIT",
+  "author": "Yanming41",
+  "repository": { "type": "git", "url": "https://github.com/Yanming41/dsh-plugins.git", "directory": "packages/discord-bridge" },
+  "dependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "discord.js": "^14.27.0",
+    "mathjax-full": "^3.2.1"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-llm": "*",
+    "dsh-plugin-persistent-agents": ">=0.1.0"
+  },
+  "dsh": { "bundle": { "patch": "./cordis.patch.yml" } }
+}

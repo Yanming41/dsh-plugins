@@ -1,0 +1,5 @@
+# 加密密钥保险柜。配置项（表单端口、本机 API 端口、链接发送方式等）见 README。
+- insert:
+    - id: secret-vault
+      name: dsh-plugin-secret-vault
+      config: {}

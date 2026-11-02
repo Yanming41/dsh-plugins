@@ -1,0 +1,38 @@
+{
+  "name": "dsh-plugin-persistent-agents",
+  "version": "0.1.0",
+  "description": "DeepSeek Harness 插件：常驻的 Claude Code / Codex 会话（CC 走 stream-json + stdio 权限，Codex 走 app-server），支持续接、人工审批和中断",
+  "type": "module",
+  "main": "lib/index.mjs",
+  "exports": {
+    ".": "./lib/index.mjs"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "cordis.patch.yml"
+  ],
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "cordis",
+    "claude-code",
+    "codex",
+    "agent"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yanming41/dsh-plugins.git",
+    "directory": "packages/persistent-agents"
+  },
+  "author": "Yanming41"
+}

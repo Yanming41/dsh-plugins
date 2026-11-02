@@ -1,0 +1,5 @@
+# 密钥泄漏守卫：进日志、上下文、系统提示词、遥测、对外消息前打码。和 secret-vault 一起用能精确认出存过的值。
+- insert:
+    - id: secret-guard
+      name: dsh-plugin-secret-guard
+      config: {}

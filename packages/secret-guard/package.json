@@ -1,0 +1,42 @@
+{
+  "name": "dsh-plugin-secret-guard",
+  "version": "0.1.0",
+  "description": "Secret leak guard for DeepSeek Harness: scrubs secrets before they reach the session log, the model context, the system prompt, telemetry, and outbound messages. Pairs with secret-vault to catch your own stored passwords exactly.",
+  "type": "module",
+  "main": "lib/index.mjs",
+  "exports": {
+    ".": "./lib/index.mjs"
+  },
+  "files": [
+    "lib",
+    "README.md",
+    "cordis.patch.yml"
+  ],
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "cordis",
+    "secrets",
+    "redaction",
+    "scrub",
+    "guard"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@sanity-labs/secret-scan": "^1.1.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Yanming41/dsh-plugins.git",
+    "directory": "packages/secret-guard"
+  },
+  "author": "Yanming41"
+}
