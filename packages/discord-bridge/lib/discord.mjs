@@ -26,7 +26,7 @@ export function apply(ctx, config = {}) {
   if (!token) throw new Error('没有 Discord bot token：配置 token，或设环境变量 DISCORD_TOKEN');
   // 配置里的频道 + lobby 开出来的帖子（存 state/channels.json，重启不丢）
   const opened = new JsonStore(stateDir(), 'channels.json');
-  // 大厅（config.lobbies）：可以和别的 bot 共用的频道，只收 / 开头的命令（event.lobby = true），别的话不碰
+  // 大厅（config.lobbies）：event.lobby = true。threads 不接大厅的消息；lobby 插件只处理会话命令，其余留给别的插件（比如前台 agent）
   const lobbies = new Set((config.lobbies ?? []).map(String));
   const channels = new Set([...(config.channels ?? []), ...lobbies, ...(opened.get('threads') ?? [])].map(String));
   // 旧网关读 status.json 里的频道列表，列在里面的它就不回应
@@ -70,7 +70,6 @@ export function apply(ctx, config = {}) {
     // @ 到的 agent，按在正文里出现的顺序；正文里去掉这些 @
     let text = message.content ?? '';
     const lobby = lobbies.has(message.channelId);
-    if (lobby && !text.trim().startsWith('/')) return;
     const agents = [];
     for (const m of text.matchAll(/<@!?(\d+)>/g)) {
       const key = agentByUserId.get(m[1]);
@@ -91,7 +90,7 @@ export function apply(ctx, config = {}) {
   // 斜杠命令(由旧网关的 register_commands.mjs 一起注册，scope=dsh 的旧网关不回应)：
   // 先在 3 秒内回一条只有自己看得到的确认，再还原成手打文字当普通消息交给订阅者。
   // 按钮：custom_id 以 dsh: 开头的归我们（旧网关会跳过），先 deferUpdate 占住交互再交给订阅者。
-  const SLASH = new Set(['agent', 'new', 'reload', 'stop', 'todo', 'help', 'end', 'clear', 'screen', 'model', 'effort', 'mode', 'compact', 'context', 'cost', 'cc', 'codex', 'sessions', 'resume', 'codex-sessions', 'codex-resume', 'list']);
+  const SLASH = new Set(['agent', 'new', 'reload', 'stop', 'todo', 'help', 'end', 'clear', 'screen', 'model', 'effort', 'mode', 'compact', 'context', 'cost', 'cc', 'codex', 'sessions', 'resume', 'codex-sessions', 'codex-resume', 'list', '2b-new']);
   const onInteraction = async (interaction, fromAgent) => {
     if (!channels.has(interaction.channelId)) return;
     if (interaction.isButton() && /^dsh:(ch|cp):/.test(interaction.customId)) return onReplyButton(interaction);
@@ -188,6 +187,15 @@ export function apply(ctx, config = {}) {
 
   const service = {
     get ready() { return client.isReady(); },
+    /** 主 bot 的用户 ID（识别「@主 bot」用） */
+    get botUserId() { return client.user?.id ?? null; },
+    /** 频道最近的消息（从旧到新）：[{ id, authorId, author, bot, text }] */
+    async recent(channelId, limit = 15) {
+      const msgs = await (await client.channels.fetch(channelId)).messages.fetch({ limit });
+      return [...msgs.values()].reverse().map((m) => ({ id: m.id, authorId: m.author.id, author: m.member?.displayName ?? m.author.username, bot: m.author.bot, text: m.content || (m.attachments.size ? '[附件]' : '') }));
+    },
+    /** 频道/帖子名字 */
+    async channelName(channelId) { return (await client.channels.fetch(channelId).catch(() => null))?.name ?? null; },
     /** 订阅本插件放行的消息；返回取消订阅函数（请包在调用方的 ctx.effect 里）。 */
     onMessage(fn) { listeners.add(fn); return () => listeners.delete(fn); },
     /** 订阅 dsh: 开头的按钮点击：{ channelId, customId, done(note) } */

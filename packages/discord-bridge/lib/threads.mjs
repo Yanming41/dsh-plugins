@@ -382,9 +382,13 @@ export function apply(ctx, config = {}) {
     }
   }
 
-  ctx.effect(() => ctx.discord.onMessage((msg) => !msg.lobby && handle(msg.channelId, msg.text.trim(), msg.attachments, msg.agents ?? [], msg.id)));
+  // 开头 @ 主 bot 的消息：装了前台插件（ctx.frontdesk）就归它，不交给帖子的 agent
+  const toFrontdesk = (text) => ctx.get('frontdesk', false) && ctx.discord.botUserId && new RegExp(`^\\s*<@!?${ctx.discord.botUserId}>`).test(text);
+  ctx.effect(() => ctx.discord.onMessage((msg) => !msg.lobby && !toFrontdesk(msg.text) && handle(msg.channelId, msg.text.trim(), msg.attachments, msg.agents ?? [], msg.id)));
   ctx.provide('threads', {
     submit: (channelId, text) => handle(channelId, text),
+    /** 中止正在跑的一轮（同帖子里发 /stop） */
+    stop: (channelId) => handle(channelId, '/stop'),
     busy: (channelId) => isBusy(channelId),
     /** lobby 开帖后绑定：{ engine, title, cwd, cc|codex: 会话 ID } */
     bind: (channelId, patch) => save(channelId, patch),

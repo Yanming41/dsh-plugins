@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-discord-bridge",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Discord bridge for DeepSeek Harness: chat with dsh / Claude Code / Codex in Discord threads, one bot per agent with @ routing, per-thread work lock and queue, live progress, reply buttons, LaTeX rendering, and opening/resuming local sessions from Discord.",
   "type": "module",
   "exports": {

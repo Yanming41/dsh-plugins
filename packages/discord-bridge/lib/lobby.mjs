@@ -96,6 +96,24 @@ export function apply(ctx, config = {}) {
     }
   }
 
+  // 给别的插件（比如前台 agent）用：开新帖、按会话 ID 接回历史会话。出错直接抛
+  ctx.provide('lobby', {
+    async open(engine, title, cwd = defaultCwd) {
+      title = String(title).replace(/^(\s*\[(cc|codex)\]\s*)+/i, '').trim() || '未命名';
+      return openThread(engine, title, `${LABEL[engine]} 新会话（目录 \`${cwd}\`）。`, { [engine]: null, cwd });
+    },
+    async resume(engine, sessionId, force = false) {
+      const item = (await lister[engine](config)).find((d) => d.sessionId === sessionId)
+        ?? (await (engine === 'cc' ? listClaudeSessions : listCodexSessions)(50)).find((d) => d.sessionId === sessionId);
+      if (!item) throw new Error('找不到这个会话，先看历史列表');
+      const bound = boundTo(engine, sessionId);
+      if (bound) throw new Error(`这个会话已经绑定在 <#${bound}> 了`);
+      if (!force && Date.now() - item.mtimeMs < RECENTLY_ACTIVE_MS) throw new Error('这个会话最近还在更新，可能正开在别的终端里；确认没在用再 force');
+      const title = item.title ?? `会话 ${sessionId.slice(0, 8)}`;
+      return openThread(engine, title, `接上之前的 ${LABEL[engine]} 会话「${title}」（目录 \`${item.cwd}\`）。`, { [engine]: sessionId, cwd: item.cwd });
+    },
+  });
+
   ctx.effect(() => ctx.discord.onMessage((msg) => {
     const text = msg.text.trim();
     if (msg.lobby && /^\/help\b/.test(text)) return ctx.discord.send(msg.channelId, HELP);
