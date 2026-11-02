@@ -1,0 +1,138 @@
+{
+  "format": 1,
+  "title": "Yanming41 dsh plugins",
+  "description": "Discord bridge, persistent Claude Code / Codex sessions, secret vault, secret guard",
+  "plugins": [
+    {
+      "name": "dsh-plugin-discord-bridge",
+      "title": "dsh-plugin-discord-bridge",
+      "description": "Discord bridge for DeepSeek Harness: chat with dsh / Claude Code / Codex in Discord threads, one bot per agent with @ routing, per-thread work lock and queue, live progress, reply buttons, LaTeX rendering, and opening/resuming local sessions from Discord.",
+      "author": "Yanming41",
+      "repository": {
+        "url": "https://github.com/Yanming41/dsh-plugins",
+        "directory": "packages/discord-bridge"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "cordis",
+          "discord",
+          "bridge",
+          "claude-code",
+          "codex"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793641329,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Yanming41/dsh-plugins",
+            "commit": "ae5fdd7b072e83517de6ff05588ac520773c48be",
+            "path": "packages/discord-bridge"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-persistent-agents",
+      "title": "dsh-plugin-persistent-agents",
+      "description": "DeepSeek Harness 插件：常驻的 Claude Code / Codex 会话（CC 走 stream-json + stdio 权限，Codex 走 app-server），支持续接、人工审批和中断",
+      "author": "Yanming41",
+      "repository": {
+        "url": "https://github.com/Yanming41/dsh-plugins",
+        "directory": "packages/persistent-agents"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "deepseek-harness",
+          "cordis",
+          "claude-code",
+          "codex",
+          "agent"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793641329,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Yanming41/dsh-plugins",
+            "commit": "ae5fdd7b072e83517de6ff05588ac520773c48be",
+            "path": "packages/persistent-agents"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-secret-guard",
+      "title": "dsh-plugin-secret-guard",
+      "description": "Secret leak guard for DeepSeek Harness: scrubs secrets before they reach the session log, the model context, the system prompt, telemetry, and outbound messages. Pairs with secret-vault to catch your own stored passwords exactly.",
+      "author": "Yanming41",
+      "repository": {
+        "url": "https://github.com/Yanming41/dsh-plugins",
+        "directory": "packages/secret-guard"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "cordis",
+          "secrets",
+          "redaction",
+          "scrub",
+          "guard"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793641329,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Yanming41/dsh-plugins",
+            "commit": "ae5fdd7b072e83517de6ff05588ac520773c48be",
+            "path": "packages/secret-guard"
+          }
+        }
+      ]
+    },
+    {
+      "name": "dsh-plugin-secret-vault",
+      "title": "dsh-plugin-secret-vault",
+      "description": "Encrypted secret vault for DeepSeek Harness: the model uses secrets by reference and never sees the values; one-time links let you enter secrets from phone/Mac.",
+      "author": "Yanming41",
+      "repository": {
+        "url": "https://github.com/Yanming41/dsh-plugins",
+        "directory": "packages/secret-vault"
+      },
+      "metadata": {
+        "keywords": [
+          "dsh",
+          "dsh-plugin",
+          "cordis",
+          "secrets",
+          "vault",
+          "password",
+          "dpapi"
+        ]
+      },
+      "versions": [
+        {
+          "version": "0.1.0",
+          "publishTimestamp": 1793641329,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Yanming41/dsh-plugins",
+            "commit": "ae5fdd7b072e83517de6ff05588ac520773c48be",
+            "path": "packages/secret-vault"
+          }
+        }
+      ]
+    }
+  ]
+}
