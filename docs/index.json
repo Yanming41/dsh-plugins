@@ -25,6 +25,16 @@
       },
       "versions": [
         {
+          "version": "0.1.1",
+          "publishTimestamp": 1793642070,
+          "source": {
+            "type": "git",
+            "url": "https://github.com/Yanming41/dsh-plugins",
+            "commit": "3ca733f96e1757d977b6e7777319817d2c6eed40",
+            "path": "packages/discord-bridge"
+          }
+        },
+        {
           "version": "0.1.0",
           "publishTimestamp": 1793641329,
           "source": {
